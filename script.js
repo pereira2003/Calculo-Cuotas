@@ -62,12 +62,7 @@ form.addEventListener('submit', function (event) {
     return;
   }
 
-  if (!frecuencia) {
-    mensaje.textContent = 'Seleccione la frecuencia de pago.';
-    totalPrimaElement.textContent = '$0.00';
-    cuotaElement.textContent = '';
-    return;
-  }
+  const frecuencia = document.getElementById('frecuencia').value || 'mensual';
 
   const total = calcularTotal(cantidad, precio);
   const prima = total * 0.10;
