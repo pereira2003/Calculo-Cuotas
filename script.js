@@ -64,7 +64,9 @@ form.addEventListener('submit', function (event) {
 
   const total = calcularTotal(cantidad, precio);
   const prima = total * 0.10;
-  const totalCancelar = total - prima;
+  const totalAntesDescuento = total - prima;
+  const descuento = meses === 2 || meses === 6 ? 0.15 : 0;
+  const totalCancelar = totalAntesDescuento * (1 - descuento);
   const pagos = pagosPorFrecuencia(meses, frecuencia);
   const cuota = totalCancelar / pagos;
   const frecuenciaTexto = nombreFrecuencia(frecuencia);
@@ -72,5 +74,5 @@ form.addEventListener('submit', function (event) {
 
   mensaje.textContent = `$${prima.toFixed(2)}`;
   totalPrimaElement.textContent = `$${totalCancelar.toFixed(2)}`;
-  cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales).`;
+  cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales)` + (descuento ? ` con 15% de descuento aplicado` : '.') + `.`;
 });
