@@ -1,33 +1,143 @@
-const form = document.getElementById('cuotaForm');
-const mensaje = document.getElementById('mensaje');
-
-function calcularTotal(cantidad, precio) {
-  return cantidad * precio;
+:root {
+  --bg: #eef6ff;
+  --surface: #ffffff;
+  --accent: #3b82f6;
+  --text: #1f2937;
+  --muted: #475569;
+  --border: #cbd5e1;
+  --radius: 18px;
 }
 
-form.addEventListener('submit', function (event) {
-  event.preventDefault();
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-  const cantidad = Number(document.getElementById('cantidad').value);
-  const precio = Number(document.getElementById('precio').value);
-  const meses = Number(document.getElementById('meses').value);
+body {
+  min-height: 100vh;
+  background: linear-gradient(180deg, #f8fbff 0%, #eef2ff 100%);
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
 
-  if (!cantidad || cantidad < 1) {
-    mensaje.textContent = 'Ingrese una cantidad válida mayor o igual a 1.';
-    return;
+.container {
+  width: min(100%, 560px);
+  background: var(--surface);
+  border: 1px solid rgba(148, 163, 184, 0.18);
+  border-radius: var(--radius);
+  padding: 32px;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.08);
+}
+
+h1 {
+  font-size: clamp(1.75rem, 2.5vw, 2.6rem);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+form {
+  display: grid;
+  gap: 18px;
+}
+
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+input,
+select {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font: inherit;
+  background: #fcfeff;
+}
+
+input:focus,
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.16);
+}
+
+button {
+  width: 100%;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 14px;
+  background: var(--accent);
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+button:hover {
+  background: #2563eb;
+  transform: translateY(-1px);
+}
+
+.resultado {
+  margin-top: 34px;
+}
+
+h2 {
+  margin-bottom: 18px;
+  font-size: 1.3rem;
+}
+
+.result-grid {
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.result-card {
+  background: #f8fbff;
+  border: 1px solid rgba(59, 130, 246, 0.12);
+  border-radius: 16px;
+  padding: 18px 16px;
+}
+
+.label {
+  display: block;
+  margin-bottom: 10px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+strong {
+  display: block;
+  font-size: 1.25rem;
+  color: #111827;
+}
+
+.subtexto {
+  margin-top: 18px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 520px) {
+  .container {
+    padding: 24px;
   }
 
-  if (!precio || precio <= 0) {
-    mensaje.textContent = 'Ingrese un precio válido mayor a 0.';
-    return;
+  .result-grid {
+    grid-template-columns: 1fr;
   }
-
-  const total = calcularTotal(cantidad, precio);
-  const prima = total * 0.10;
-  const totalCancelar = total - prima;
-  const cuota = totalCancelar / meses;
-
-  mensaje.textContent = `$${prima.toFixed(2)}`;
-  document.getElementById('totalPrima').textContent = `$${totalCancelar.toFixed(2)}`;
-  document.getElementById('cuota').textContent = `Cuota mensual: $${cuota.toFixed(2)} por ${meses} meses.`;
-});
+}

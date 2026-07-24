@@ -1,52 +1,46 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CÃ¡lculo de Cuotas</title>
-  <link rel="stylesheet" href="styles.css" />
-</head>
-<body>
-  <main class="container">
-    <h1>CÃ¡lculo de Cuotas</h1>
-    <form id="cuotaForm">
-      <div class="field">
-        <label for="cantidad">Cantidad de unidades</label>
-        <input type="number" id="cantidad" name="cantidad" min="1" placeholder="Ingrese cantidad" required />
-      </div>
-      <div class="field">
-        <label for="precio">Precio por unidad</label>
-        <input type="number" id="precio" name="precio" min="0.01" step="0.01" placeholder="Ingrese precio" required />
-      </div>
-      <div class="field">
-        <label for="meses">Periodo en meses</label>
-        <select id="meses" name="meses" required>
-          <option value="" disabled selected>Seleccione meses</option>
-          <option value="2">2 meses</option>
-          <option value="6">6 meses</option>
-          <option value="12">12 meses</option>
-          <option value="18">18 meses</option>
-          <option value="24">24 meses</option>
-        </select>
-      </div>
-      <button type="submit">Calcular cuota</button>
-    </form>
+const form = document.getElementById('cuotaForm');
+const mensaje = document.getElementById('mensaje');
+const totalPrimaElement = document.getElementById('totalPrima');
+const cuotaElement = document.getElementById('cuota');
 
-    <section class="resultado">
-      <h2>Resultado</h2>
-      <div class="result-grid">
-        <div class="result-card">
-          <span class="label">Prima (10%)</span>
-          <strong id="mensaje">$0.00</strong>
-        </div>
-        <div class="result-card">
-          <span class="label">Total a cancelar</span>
-          <strong id="totalPrima">$0.00</strong>
-        </div>
-      </div>
-      <p id="cuota" class="subtexto"></p>
-    </section>
-  </main>
-  <script src="script.js"></script>
-</body>
-</html>
+function calcularTotal(cantidad, precio) {
+  return cantidad * precio;
+}
+
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const cantidad = Number(document.getElementById('cantidad').value);
+  const precio = Number(document.getElementById('precio').value);
+  const meses = Number(document.getElementById('meses').value);
+
+  if (!cantidad || cantidad < 1) {
+    mensaje.textContent = 'Ingrese una cantidad válida mayor o igual a 1.';
+    totalPrimaElement.textContent = '$0.00';
+    cuotaElement.textContent = '';
+    return;
+  }
+
+  if (!precio || precio <= 0) {
+    mensaje.textContent = 'Ingrese un precio válido mayor a 0.';
+    totalPrimaElement.textContent = '$0.00';
+    cuotaElement.textContent = '';
+    return;
+  }
+
+  if (!meses || meses < 1) {
+    mensaje.textContent = 'Seleccione un periodo de meses válido.';
+    totalPrimaElement.textContent = '$0.00';
+    cuotaElement.textContent = '';
+    return;
+  }
+
+  const total = calcularTotal(cantidad, precio);
+  const prima = total * 0.10;
+  const totalCancelar = total - prima;
+  const cuota = totalCancelar / meses;
+
+  mensaje.textContent = `$${prima.toFixed(2)}`;
+  totalPrimaElement.textContent = `$${totalCancelar.toFixed(2)}`;
+  cuotaElement.textContent = `Cuota mensual: $${cuota.toFixed(2)} por ${meses} meses.`;
+});
