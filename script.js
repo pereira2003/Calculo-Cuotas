@@ -74,18 +74,17 @@ form.addEventListener('submit', function (event) {
   const prima = total * 0.10;
   const totalAntesDescuento = total - prima;
   const descuento = meses === 2 || meses === 6 ? 0.15 : 0;
-  const primaDescontada = descuento ? prima * (1 - descuento) : prima;
-  const totalCancelar = totalAntesDescuento + primaDescontada;
+  const totalConDescuento = descuento ? totalAntesDescuento * (1 - descuento) : totalAntesDescuento;
   const pagos = pagosPorFrecuencia(meses, frecuencia);
-  const cuota = totalCancelar / pagos;
+  const cuota = totalConDescuento / pagos;
   const frecuenciaTexto = nombreFrecuencia(frecuencia);
   const tipoPago = frecuencia === 'mensual' ? 'meses' : frecuencia === 'quincenal' ? 'quincenas' : 'semanas';
 
   mensaje.textContent = `Prima: $${prima.toFixed(2)}`;
   totalPrimaElement.textContent = `$${totalAntesDescuento.toFixed(2)}`;
-  primaDescontadaElement.textContent = `$${primaDescontada.toFixed(2)}`;
+  primaDescontadaElement.textContent = `$${totalConDescuento.toFixed(2)}`;
   textoPrimaDescuentoElement.textContent = descuento
-    ? '15% de descuento aplicado sólo a la prima'
+    ? '15% de descuento aplicado al total a cancelar'
     : 'No aplica descuento de 15%';
   cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales)` + (descuento ? ` - 15% de descuento aplicado.` : '.');
 });
