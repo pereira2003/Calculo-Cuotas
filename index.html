@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cálculo de Cuotas</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Cálculo de Cuotas</h1>
+    <form id="cuotaForm">
+      <div class="field">
+        <label for="cantidad">Cantidad de unidades</label>
+        <input type="number" id="cantidad" name="cantidad" min="1" placeholder="Ingrese cantidad" required />
+      </div>
+      <div class="field">
+        <label for="precio">Precio por unidad</label>
+        <input type="number" id="precio" name="precio" min="0.01" step="0.01" placeholder="Ingrese precio" required />
+      </div>
+      <div class="field">
+        <label for="meses">Periodo en meses</label>
+        <select id="meses" name="meses" required>
+          <option value="" disabled selected>Seleccione meses</option>
+          <option value="2">2 meses</option>
+          <option value="6">6 meses</option>
+          <option value="12">12 meses</option>
+          <option value="18">18 meses</option>
+          <option value="24">24 meses</option>
+        </select>
+      </div>
+      <button type="submit">Calcular cuota</button>
+    </form>
+
+    <section class="resultado">
+      <h2>Resultado</h2>
+      <div class="result-grid">
+        <div class="result-card">
+          <span class="label">Prima (10%)</span>
+          <strong id="mensaje">$0.00</strong>
+        </div>
+        <div class="result-card">
+          <span class="label">Total a cancelar</span>
+          <strong id="totalPrima">$0.00</strong>
+        </div>
+      </div>
+      <p id="cuota" class="subtexto"></p>
+    </section>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+const form = document.getElementById('cuotaForm');
+const mensaje = document.getElementById('mensaje');
+
+function calcularTotal(cantidad, precio) {
+  return cantidad * precio;
+}
+
+form.addEventListener('submit', function (event) {
+  event.preventDefault();
+
+  const cantidad = Number(document.getElementById('cantidad').value);
+  const precio = Number(document.getElementById('precio').value);
+  const meses = Number(document.getElementById('meses').value);
+
+  if (!cantidad || cantidad < 1) {
+    mensaje.textContent = 'Ingrese una cantidad válida mayor o igual a 1.';
+    return;
+  }
+
+  if (!precio || precio <= 0) {
+    mensaje.textContent = 'Ingrese un precio válido mayor a 0.';
+    return;
+  }
+
+  const total = calcularTotal(cantidad, precio);
+  const prima = total * 0.10;
+  const totalCancelar = total - prima;
+  const cuota = totalCancelar / meses;
+
+  mensaje.textContent = `$${prima.toFixed(2)}`;
+  document.getElementById('totalPrima').textContent = `$${totalCancelar.toFixed(2)}`;
+  document.getElementById('cuota').textContent = `Cuota mensual: $${cuota.toFixed(2)} por ${meses} meses.`;
+});
