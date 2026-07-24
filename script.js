@@ -72,7 +72,9 @@ form.addEventListener('submit', function (event) {
   const frecuenciaTexto = nombreFrecuencia(frecuencia);
   const tipoPago = frecuencia === 'mensual' ? 'meses' : frecuencia === 'quincenal' ? 'quincenas' : 'semanas';
 
-  mensaje.textContent = `$${prima.toFixed(2)}`;
+  mensaje.textContent = descuento
+    ? `Se aplicó un 15% de descuento. Prima: $${prima.toFixed(2)}`
+    : `Prima: $${prima.toFixed(2)}`;
   totalPrimaElement.textContent = `$${totalCancelar.toFixed(2)}`;
-  cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales)` + (descuento ? ` con 15% de descuento aplicado` : '.') + `.`;
+  cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales)` + (descuento ? ` - 15% de descuento aplicado.` : '.');
 });
