@@ -1,6 +1,7 @@
 const form = document.getElementById('cuotaForm');
 const mensaje = document.getElementById('mensaje');
 const totalPrimaElement = document.getElementById('totalPrima');
+const montoDescuentoElement = document.getElementById('montoDescuento');
 const cuotaElement = document.getElementById('cuota');
 
 function calcularTotal(cantidad, precio) {
@@ -44,6 +45,7 @@ form.addEventListener('submit', function (event) {
   if (!cantidad || cantidad < 1) {
     mensaje.textContent = 'Ingrese una cantidad válida mayor o igual a 1.';
     totalPrimaElement.textContent = '$0.00';
+    montoDescuentoElement.textContent = '';
     cuotaElement.textContent = '';
     return;
   }
@@ -51,6 +53,7 @@ form.addEventListener('submit', function (event) {
   if (!precio || precio <= 0) {
     mensaje.textContent = 'Ingrese un precio válido mayor a 0.';
     totalPrimaElement.textContent = '$0.00';
+    montoDescuentoElement.textContent = '';
     cuotaElement.textContent = '';
     return;
   }
@@ -58,6 +61,7 @@ form.addEventListener('submit', function (event) {
   if (!meses || meses < 1) {
     mensaje.textContent = 'Seleccione un periodo de meses válido.';
     totalPrimaElement.textContent = '$0.00';
+    montoDescuentoElement.textContent = '';
     cuotaElement.textContent = '';
     return;
   }
@@ -75,6 +79,9 @@ form.addEventListener('submit', function (event) {
   mensaje.textContent = descuento
     ? `Se aplicó un 15% de descuento. Prima: $${prima.toFixed(2)}`
     : `Prima: $${prima.toFixed(2)}`;
+  montoDescuentoElement.textContent = descuento
+    ? `Monto con descuento: $${totalCancelar.toFixed(2)}`
+    : '';
   totalPrimaElement.textContent = `$${totalCancelar.toFixed(2)}`;
   cuotaElement.textContent = `Cuota ${frecuenciaTexto}: $${cuota.toFixed(2)} cada ${tipoPago} (${pagos} pagos totales)` + (descuento ? ` - 15% de descuento aplicado.` : '.');
 });
